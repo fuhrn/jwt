@@ -15,6 +15,10 @@ main {
   flex: 1;
 }
 
+.img-large {
+  max-width: 100%;
+}
+
 .btn-primary {
   background-color: #f0c14b;
   color: #000 

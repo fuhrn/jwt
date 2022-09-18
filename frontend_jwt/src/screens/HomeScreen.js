@@ -1,6 +1,7 @@
 import { useEffect, useReducer } from "react";
 import axios from "axios";
 import logger from "use-reducer-logger";
+import { Helmet } from "react-helmet-async";
 import { Row, Col } from "react-bootstrap";
 import Product from "../components/Product";
 // import data from "../data";
@@ -40,6 +41,7 @@ function HomeScreen() {
 
   return (
     <div>
+      <Helmet><title>JWT</title></Helmet>
       <h1>Productos destacados</h1>
       <div className="products">
         {loading ? (
