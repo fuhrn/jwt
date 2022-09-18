@@ -1,7 +1,8 @@
 import { useEffect, useReducer } from "react";
-import { Link } from "react-router-dom";
 import axios from "axios";
-import logger from "use-reducer-logger"
+import logger from "use-reducer-logger";
+import { Row, Col } from "react-bootstrap";
+import Product from "../components/Product";
 // import data from "../data";
 
 const reducer = (state, action) => {
@@ -15,7 +16,7 @@ const reducer = (state, action) => {
     default:
       return state;
   }
-}
+};
 
 function HomeScreen() {
   const [{ loading, error, products }, dispatch] = useReducer(logger(reducer), {
@@ -23,50 +24,40 @@ function HomeScreen() {
     loading: true,
     error: "",
   });
-  
+
   useEffect(() => {
     const fetchData = async () => {
       dispatch({ type: "FETCH_REQUEST" });
       try {
         const { data } = await axios.get("/api/products");
         dispatch({ type: "FETCH_SUCCESS", payload: data });
-      } 
-      catch (error) {
+      } catch (error) {
         dispatch({ type: "FETCH_FAIL", payload: error.message });
       }
-    }
-    fetchData()
-   }, []); 
+    };
+    fetchData();
+  }, []);
 
   return (
     <div>
       <h1>Productos destacados</h1>
       <div className="products">
-        { 
-          loading ? (
-            <div>Loading...</div>
-          ) : error ? (
-              <div>{error}</div>
-          ) : (
-          products.map((product) => (
-          <div className="product" key={product.slug}>
-            <Link to={`/product/${product.slug}`}>
-              <img src={product.image} alt={product.name} />
-            </Link>
-            <div className="product-info">
-              <Link to={`/product/${product.slug}`}>
-                <p>{product.name}</p>
-              </Link>
-              <p>
-                <strong>${product.price}</strong>
-              </p>
-              <button>Add To Cart</button>
-            </div>
-          </div>
-        )))}
+        {loading ? (
+          <div>Loading...</div>
+        ) : error ? (
+          <div>{error}</div>
+        ) : (
+          <Row>
+            {products.map((product) => (
+              <Col sm={6} md={4} lg={3} className="mb-3" key={product.slug}>
+                <Product product={product} />
+              </Col>
+            ))}
+          </Row>
+        )}
       </div>
     </div>
   );
 }
 
-export default HomeScreen
+export default HomeScreen;
