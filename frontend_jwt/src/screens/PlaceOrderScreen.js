@@ -29,6 +29,8 @@ const reducer = (state, action) => {
 export default function PlaceOrderScreen() {
   const navigate = useNavigate();
 
+  // no necesito err en el state porque cualquier error del backend se muestra en el toast
+  // el error viene del backend en el payload de la action
   const [{ loading }, dispatch] = useReducer(reducer, {
     loading: false,
   });
@@ -68,6 +70,7 @@ export default function PlaceOrderScreen() {
       ctxDispatch({ type: "CART_CLEAR" });
       dispatch({ type: "CREATE_SUCCESS" });
       localStorage.removeItem("cartItems");
+      // data.order._id me lo informa el backend
       navigate(`/order/${data.order._id}`);
     } catch (err) {
       dispatch({ type: "CREATE_FAIL" });

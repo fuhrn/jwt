@@ -46,10 +46,15 @@ function reducer(state, action) {
       const cartItems = state.cart.cartItems.filter(
         (item) => item._id !== action.payload._id
       );
-
       localStorage.setItem("cartItems", JSON.stringify(cartItems));
       return { ...state, cart: { ...state.cart, cartItems } };
-    }
+    };
+      // limpieza del cartItems lo estamos haciendo tambien en el signout ?...
+      // esta accion la ejecuta place order cuando emitio la orden
+    case "CART_CLEAR":
+      return {
+        ...state, cart: { ...state.cart, cartItems: [] }
+      };
     case "USER_SIGNIN":
       return {
         ...state,
@@ -73,7 +78,7 @@ function reducer(state, action) {
           shippingAddress: action.payload,
         },
       };
-    case 'SAVE_PAYMENT_METHOD':
+    case "SAVE_PAYMENT_METHOD":
       return {
         ...state,
         cart: { ...state.cart, paymentMethod: action.payload },

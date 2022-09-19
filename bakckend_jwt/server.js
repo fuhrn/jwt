@@ -5,6 +5,7 @@ import mongoose from 'mongoose';
 import seedRouter from './routes/seedRoutes.js';
 import productRouter from './routes/productRoutes.js';
 import userRouter from './routes/userRoute.js';
+import orderRouter from './routes/orderRoutes.js';
 
 // permite que las variables de entorno queden disponibles en server.js.
 dotenv.config();
@@ -27,6 +28,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api/seed', seedRouter);
 app.use('/api/products', productRouter);
 app.use("/api/users", userRouter);
+app.use("/api/orders", orderRouter);
 
 // para capturar errores de forma asincrona. Primer argumento es err.
 app.use((err, req, res, next) => {
