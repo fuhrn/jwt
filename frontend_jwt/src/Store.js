@@ -4,7 +4,9 @@ export const Store = createContext();
 
 const initialState = {
   cart: {
-    cartItems: [],
+    cartItems: localStorage.getItem("cartItems")
+      ? JSON.parse(localStorage.getItem("cartItems"))
+      : [],
   },
 };
 
@@ -28,14 +30,19 @@ function reducer(state, action) {
         )
         // si newItem no existe en el cartItems, se agrega el nuevo item
         : [...state.cart.cartItems, newItem];
+      localStorage.setItem("cartItems", JSON.stringify(cartItems));
+      return {...state, cart: {...state.cart, cartItems}};
+    // en 'CART_REMOVE_ITEM' usamos block scope para definir una variable local: cartItems, para
+    // que no se confunda con const cartItems definida en "case CART_ADD_ITEM"
+    // action.payload es el item del producto a remover del cart
+    case 'CART_REMOVE_ITEM': {
+      const cartItems = state.cart.cartItems.filter(
+        (item) => item._id !== action.payload._id
+      );
       
-      return {
-        ...state,
-        cart: {
-          ...state.cart,
-          cartItems,
-        },
-      };
+      localStorage.setItem("cartItems", JSON.stringify(cartItems));
+      return { ...state, cart: { ...state.cart, cartItems } };
+    };
     default:
       return state;
   }

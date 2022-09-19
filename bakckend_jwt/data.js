@@ -7,7 +7,7 @@ const data = {
       category: "category-1",
       image: "https://via.placeholder.com/679x829.jpg", // 679px × 829px
       price: 120,
-      countInStock: 10,
+      countInStock: 0,
       brand: "Samsung",
       rating: 4.5,
       numReviews: 10,

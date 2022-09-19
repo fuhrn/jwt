@@ -2,7 +2,7 @@ import axios from "axios";
 import { useReducer, useEffect, useContext } from "react";
 import { Helmet } from "react-helmet-async";
 import { Row, Col, ListGroup, Card, Badge, Button } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Rating from "../components/Rating";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
@@ -23,6 +23,7 @@ const reducer = (state, action) => {
 };
 
 function ProductScreen() {
+  const navigate = useNavigate();
   const { slug } = useParams();
 
   const [{ loading, error, product }, dispatch] = useReducer(reducer, {
@@ -62,6 +63,7 @@ function ProductScreen() {
     // el payload es el product que se va a agregar al carrito, mas un nuevo campo quantity
     // si es un nuevo producto en el cart, quantity es 1, si ya existe, quantity es el existente + 1
     ctxDispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity } });
+    navigate('/cart')
   }
 
   return loading ? (
@@ -75,10 +77,10 @@ function ProductScreen() {
       </Col>
       <Col md={3}>
         <ListGroup variant="flush">
-              <ListGroup.Item>
-                <Helmet>
-                  <title>{product.name}</title>
-                </Helmet> 
+          <ListGroup.Item>
+            <Helmet>
+              <title>{product.name}</title>
+            </Helmet> 
           </ListGroup.Item>
           <ListGroup.Item>
             <Rating rating={product.rating} numReviews={product.numReviews} />
