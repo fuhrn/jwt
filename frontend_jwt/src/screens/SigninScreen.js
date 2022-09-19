@@ -6,12 +6,13 @@ import Button from "react-bootstrap/Button";
 import { Helmet } from "react-helmet-async";
 import { useContext, useEffect, useState } from "react";
 import { Store } from "../Store";
-// import { toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { getError } from "../utils";
 
 export default function SigninScreen() {
   const navigate = useNavigate();
   const { search } = useLocation();
+  // redirectInUrl es la url a la que se redirige al usuario luego de hacer signin
   const redirectInUrl = new URLSearchParams(search).get("redirect");
   const redirect = redirectInUrl ? redirectInUrl : "/";
 
@@ -19,19 +20,24 @@ export default function SigninScreen() {
   const [password, setPassword] = useState("");
 
   const { state, dispatch: ctxDispatch } = useContext(Store);
+  // necesito userInfo para saber si el usuario ya está logueado y hacer funcionar useEffect
   const { userInfo } = state;
+  
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
+      // email and password are state variables -> see above useState
       const { data } = await Axios.post("/api/users/signin", {
         email,
         password,
       });
+      console.log("data", data);
       ctxDispatch({ type: "USER_SIGNIN", payload: data });
       localStorage.setItem("userInfo", JSON.stringify(data));
       navigate(redirect || "/");
     } catch (err) {
-      // toast.error(getError(err));
+      // alert('Invalid email or password');
+      toast.error(getError(err));
     }
   };
 
