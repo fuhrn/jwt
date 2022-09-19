@@ -1,5 +1,19 @@
 import express from 'express';
 import data from './data.js';
+import dotenv from 'dotenv';
+import mongoose from 'mongoose';
+
+// permite que las variables de entorno queden disponibles en server.js.
+dotenv.config();
+
+mongoose
+  .connect(process.env.MONGODB_URI)
+  .then(() => {
+    console.log("connected to db");
+  })
+  .catch((err) => {
+    console.log(err.message);
+  });
 
 const app = express();
 
