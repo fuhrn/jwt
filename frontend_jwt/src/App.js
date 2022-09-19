@@ -12,6 +12,7 @@ import SignupScreen from "./screens/SignupScreen";
 import { useContext } from "react";
 import { Store } from "./Store";
 import ShippingAddressScreen from "./screens/ShippingAddressScreen";
+import PaymentMethodScreen from "./screens/PaymentMethodScreen";
 
 function App() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
@@ -22,7 +23,7 @@ function App() {
     localStorage.removeItem("userInfo");
     localStorage.removeItem("shippingAddress");
     localStorage.removeItem("cartItems");
-    // localStorage.removeItem("paymentMethod");
+    localStorage.removeItem("paymentMethod");
     window.location.href = "/signin";
   };
 
@@ -79,6 +80,7 @@ function App() {
               <Route path="/signin" element={<SigninScreen />} />
               <Route path="/signup" element={<SignupScreen />} />
               <Route path="/shipping" element={<ShippingAddressScreen />} />
+              <Route path="/payment" element={<PaymentMethodScreen />} />
               <Route path="/" element={<HomeScreen />} />
             </Routes>
           </Container>
