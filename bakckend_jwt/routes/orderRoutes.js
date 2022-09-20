@@ -91,6 +91,7 @@ orderRouter.get(
 orderRouter.get(
   "/mine",
   isAuth,
+  // isAuth es un middleware que agrega a req.user el usuario autenticado
   expressAsyncHandler(async (req, res) => {
     const orders = await Order.find({ user: req.user._id });
     res.send(orders);
