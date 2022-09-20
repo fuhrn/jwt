@@ -1,5 +1,5 @@
 import express from 'express';
-import data from './data.js';
+import path from 'path';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import seedRouter from './routes/seedRoutes.js';
@@ -34,6 +34,16 @@ app.use('/api/seed', seedRouter);
 app.use('/api/products', productRouter);
 app.use("/api/users", userRouter);
 app.use("/api/orders", orderRouter);
+
+// captura el current directory name con el package path
+const __dirname = path.resolve();
+// middleware para servir archivos estáticos desde la carpeta /frontend_jwt/build
+app.use(express.static(path.join(__dirname, "/frontend_jwt/build")));
+// todas las rutas que sean accedidas por un client, se redirigirán a index.html
+// NOTA: el proyecto tiene que estar compilado con npm run build antes de subirlo a producción/Heroku
+app.get("*", (req, res) =>
+  res.sendFile(path.join(__dirname, "/frontend_jwt/build/index.html"))
+);
 
 // para capturar errores de forma asincrona. Primer argumento es err.
 app.use((err, req, res, next) => {
