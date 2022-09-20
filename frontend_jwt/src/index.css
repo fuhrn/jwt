@@ -19,7 +19,8 @@ main {
   max-width: 100%;
 }
 
-.btn-primary {
+/* primary y outline-primary son variants de btn  */
+.btn-primary, .btn-outline-primary {
   background-color: #f0c14b;
   color: #000 
 }
@@ -64,4 +65,29 @@ main {
 .checkout-steps > div.active {
   border-bottom: 0.2rem solid #f08000;
   color: #f08000;
+}
+
+/* sidebar */
+.navbar-brand {
+  font-weight: bold;
+}
+
+.side-navbar {
+  width: 240px;
+  height: 100%;
+  position: absolute;
+  left: -300px;
+  background-color: #100901;
+  transition: all 0.5s ease;
+}
+.site-container {
+  transition: 0.4s;
+}
+
+.active-cont {
+  margin-left: 240px;
+}
+
+.active-nav {
+  left: 0;
 }

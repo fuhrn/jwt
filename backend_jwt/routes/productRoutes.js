@@ -210,13 +210,14 @@ const PAGE_SIZE = 3;
 //   })
 // );
 
-// productRouter.get(
-//   "/categories",
-//   expressAsyncHandler(async (req, res) => {
-//     const categories = await Product.find().distinct("category");
-//     res.send(categories);
-//   })
-// );
+productRouter.get(
+  "/categories",
+  expressAsyncHandler(async (req, res) => {
+    // me traigo solamente las categorias, sin duplicados
+    const categories = await Product.find().distinct("category");
+    res.send(categories);
+  })
+);
 
 productRouter.get("/slug/:slug", async (req, res) => {
   const product = await Product.findOne({ slug: req.params.slug });
